@@ -4,7 +4,7 @@
 > Convention: `[ ]` todo · `[~]` in progress · `[x]` done · `[!]` blocked. Add new items as they surface — never delete, mark done. Reference `PLANNING.md` for the *why*.
 
 **Last updated:** 2026-05-29
-**Current focus:** Milestone 8 — Polish & ship (Milestones 1–7 complete & pushed)
+**Current focus:** Shipped — all 8 milestones complete & pushed (only the manual demo-video recording remains)
 **Build approach:** vertical slice — one complete end-to-end loop before going wide.
 
 ---
@@ -20,7 +20,7 @@
 | 5 | FAQ + Chatbot + Notifications | RAG + knowledge promotion | `[x]` |
 | 6 | Admin | Dashboard + moderation tooling | `[x]` |
 | 7 | Maintenance crons | Scheduled jobs + manual triggers | `[x]` |
-| 8 | Polish & ship | Design, docs, deploy-ready | `[ ]` |
+| 8 | Polish & ship | Design, docs, deploy-ready | `[x]` |
 
 ---
 
@@ -28,7 +28,7 @@
 
 > The handful of tasks being worked on right now. Pull from the milestone below as capacity frees up.
 
-- [ ] _Milestones 1–7 complete — pull from Milestone 8_
+- [x] _All milestones complete — only the manual demo-video recording remains_
 
 ---
 
@@ -148,17 +148,17 @@ Goal: wire all scheduled jobs + deletion-with-audit.
 
 Goal: portfolio-grade, reproducible, demo-ready.
 
-- [ ] Design system pass (consistent components, theme)
-- [ ] Mobile responsiveness
-- [ ] `express-rate-limit` on sensitive/expensive endpoints
-- [ ] Consistent error handling + graceful AI degradation everywhere
-- [ ] Seed full demo dataset with offline-embedded content (zero live AI on browse)
-- [ ] README (run instructions, features, MVP/swappable note, demo video)
-- [ ] CONTRIBUTING (commit + PR rules)
-- [ ] `.github/` PR + issue templates
-- [ ] Confirm LICENSE before publishing
-- [ ] Deploy workflow with commented deploy block (enable on company creds)
-- [ ] Rehearse + record ~8-min demo loop (see PLANNING §13 / demo strategy)
+- [x] Design system pass (consistent components, theme) — focus states, transitions, cohesive dark theme
+- [x] Mobile responsiveness — nav wrap, stacked headers, horizontally-scrollable admin tables
+- [x] `express-rate-limit` on sensitive/expensive endpoints — auth, AI, and new `writeLimiter` on content writes
+- [x] Consistent error handling + graceful AI degradation everywhere — central error middleware; AI mock/backoff/fallback
+- [x] Seed full demo dataset with offline-embedded content (zero live AI on browse)
+- [x] README (run instructions, features, MVP/swappable note, demo accounts + demo loop)
+- [x] CONTRIBUTING (commit + PR rules)
+- [x] `.github/` PR + issue templates
+- [x] Confirm LICENSE before publishing — MIT present
+- [x] Deploy workflow with commented deploy block (enable on company creds)
+- [ ] Rehearse + record ~8-min demo loop — **manual step** (script ready in the checklist below; recording is a human task)
 
 ---
 
