@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import authRoutes from './authRoutes.js';
+import queryRoutes from './queryRoutes.js';
 import { ai } from '../config/ai.js';
 import mongoose from 'mongoose';
 
@@ -16,5 +17,6 @@ router.get('/health', (_req, res) => {
 });
 
 router.use('/auth', authRoutes);
+router.use('/queries', queryRoutes);
 
 export default router;

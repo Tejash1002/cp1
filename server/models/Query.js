@@ -29,6 +29,10 @@ const querySchema = new mongoose.Schema(
     contact_email: { type: String, default: null },
     screenshots: { type: [String], default: [] }, // relative upload paths
 
+    // Auto-correction (opt-in) — original preserved when the body was corrected.
+    original_body: { type: String, default: null },
+    was_auto_corrected: { type: Boolean, default: false },
+
     // Duplicate / merge handling.
     is_flagged_duplicate: { type: Boolean, default: false },
     duplicate_of: { type: mongoose.Schema.Types.ObjectId, ref: 'Query', default: null },
@@ -46,6 +50,8 @@ const querySchema = new mongoose.Schema(
 
     // Semantic search / duplicate detection.
     embedding: { type: [Number], default: undefined, validate: (v) => !v || v.length === EMBEDDING_DIMS },
+    // Hash of the exact text last embedded — lets us skip re-embedding unchanged content.
+    embedding_hash: { type: String, default: null },
 
     // Solution timing.
     grace_period_deadline: { type: Date, default: null },
