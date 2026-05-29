@@ -4,7 +4,7 @@
 > Convention: `[ ]` todo · `[~]` in progress · `[x]` done · `[!]` blocked. Add new items as they surface — never delete, mark done. Reference `PLANNING.md` for the *why*.
 
 **Last updated:** 2026-05-29
-**Current focus:** Milestone 6 — Admin (Milestones 1–5 complete & pushed)
+**Current focus:** Milestone 7 — Maintenance crons (Milestones 1–6 complete & pushed)
 **Build approach:** vertical slice — one complete end-to-end loop before going wide.
 
 ---
@@ -18,7 +18,7 @@
 | 3 | Forum + Solution Engine | Answers, likes, resolution, points | `[x]` |
 | 4 | Badges & Bans | Reputation + governance basics | `[x]` |
 | 5 | FAQ + Chatbot + Notifications | RAG + knowledge promotion | `[x]` |
-| 6 | Admin | Dashboard + moderation tooling | `[ ]` |
+| 6 | Admin | Dashboard + moderation tooling | `[x]` |
 | 7 | Maintenance crons | Scheduled jobs + manual triggers | `[ ]` |
 | 8 | Polish & ship | Design, docs, deploy-ready | `[ ]` |
 
@@ -28,7 +28,7 @@
 
 > The handful of tasks being worked on right now. Pull from the milestone below as capacity frees up.
 
-- [ ] _Milestones 1–5 complete — pull from Milestone 6_
+- [ ] _Milestones 1–6 complete — pull from Milestone 7_
 
 ---
 
@@ -119,14 +119,14 @@ Goal: the knowledge surface + self-improving loop.
 
 Goal: the control room.
 
-- [ ] Admin dashboard (key metrics overview)
-- [ ] FAQ manager (CRUD, sort order, mark outdated)
-- [ ] Moderation queue (duplicates, reports, spam, outdated, gibberish flags)
-- [ ] Query amalgamation: AI groups similar queries → admin merge into canonical thread
-- [ ] Merge action (combine) / dismiss (keep both) for flagged duplicates
-- [ ] User management (roles, bans, badges)
-- [ ] Audit log viewer
-- [ ] Maintenance page with manual triggers for every cron job
+- [x] Admin dashboard (key metrics overview)
+- [x] FAQ manager (CRUD, sort order, mark outdated)
+- [x] Moderation queue (duplicates, reports, spam, outdated, gibberish flags)
+- [x] Query amalgamation: AI groups similar queries → admin merge into canonical thread
+- [x] Merge action (combine) / dismiss (keep both) for flagged duplicates
+- [x] User management (roles, bans, badges)
+- [x] Audit log viewer
+- [x] Maintenance page with manual triggers for every cron job
 
 ---
 
