@@ -163,7 +163,7 @@ export default function Home() {
     <div className="container">
       <header className="dash-head">
         <div>
-          <h1>{user ? `${greeting}, ${user.name.split(' ')[0]}` : 'Knowledge Hub'}</h1>
+          <h1>{user ? `${greeting}, ${user.name.split(' ')[0]}` : 'Curio'}</h1>
           <p className="lead">
             {user
               ? 'Here is your daily knowledge snapshot.'

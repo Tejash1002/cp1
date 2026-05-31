@@ -24,8 +24,7 @@ export default function Sidebar({ onNavigate }) {
   return (
     <aside className="sidebar">
       <Link to="/" className="brand" onClick={onNavigate}>
-        <span className="brand-name">Knowledge Hub</span>
-        <span className="brand-sub">Internal Repository</span>
+        <span className="brand-name">Curio</span>
       </Link>
 
       <Link to="/ask" className="btn-primary sidebar-new" onClick={onNavigate}>
