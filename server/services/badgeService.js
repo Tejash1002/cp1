@@ -8,7 +8,7 @@ export function earnedBadgeKeys(points) {
 }
 
 // Tier ladder = the entry tier + the four positive badge tiers.
-const TIERS = [{ key: 'newcomer', label: 'Newcomer', icon: '✨', threshold: 0 }, ...POSITIVE_BADGES];
+const TIERS = [{ key: 'newcomer', label: 'Newcomer', icon: '', threshold: 0 }, ...POSITIVE_BADGES];
 
 /** Reputation standing for a points total: current tier, next tier, progress. */
 export function standing(points = 0) {

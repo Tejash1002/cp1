@@ -46,7 +46,7 @@ export default function Profile() {
         <span className="points-pill">{profile.points} pts</span>
         {profile.standing && (
           <span className="chip">
-            {profile.standing.tier.icon} {profile.standing.tier.label}
+            {[profile.standing.tier.icon, profile.standing.tier.label].filter(Boolean).join(' ')}
           </span>
         )}
       </div>

@@ -96,7 +96,7 @@ function ReputationPanel({ user }) {
       <ReputationRing points={points} progress={progressPct} />
       <div className="rep-tier">
         <strong>
-          {tier.icon} {tier.label}
+          {[tier.icon, tier.label].filter(Boolean).join(' ')}
         </strong>
         {!isMax && <span className="muted">{ptsToNext} pts to {next.label}</span>}
         {isMax && <span className="muted">Top tier reached</span>}

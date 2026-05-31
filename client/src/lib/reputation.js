@@ -11,7 +11,7 @@ export const POSITIVE_BADGES = [
 
 // Ordered tier ladder, including the entry tier below the first badge.
 const TIERS = [
-  { label: 'Newcomer', icon: '✨', threshold: 0 },
+  { label: 'Newcomer', icon: '', threshold: 0 },
   ...POSITIVE_BADGES,
 ];
 
