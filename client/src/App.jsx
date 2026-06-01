@@ -11,7 +11,6 @@ import QueryList from './pages/QueryList.jsx';
 import QueryDetail from './pages/QueryDetail.jsx';
 import AskQuery from './pages/AskQuery.jsx';
 import EditQuery from './pages/EditQuery.jsx';
-import Leaderboard from './pages/Leaderboard.jsx';
 import Profile from './pages/Profile.jsx';
 import Faq from './pages/Faq.jsx';
 import Settings from './pages/Settings.jsx';
@@ -57,7 +56,6 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/queries" element={<QueryList />} />
           <Route path="/queries/:id" element={<QueryDetail />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/support" element={<Support />} />

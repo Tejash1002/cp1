@@ -57,8 +57,3 @@ export async function reportAnswer(answerId, reason) {
   const { data } = await api.post(`/answers/${answerId}/report`, { reason });
   return data;
 }
-
-export async function getLeaderboard() {
-  const { data } = await api.get('/users/leaderboard');
-  return data.users;
-}

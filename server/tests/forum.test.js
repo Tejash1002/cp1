@@ -172,7 +172,7 @@ describe('solution engine', () => {
   });
 });
 
-describe('reporting + leaderboard', () => {
+describe('reporting', () => {
   test('reporting a query files a moderation entry', async () => {
     const asker = await makeUser();
     const reporter = await makeUser();
@@ -186,22 +186,5 @@ describe('reporting + leaderboard', () => {
     const queued = await ModerationQueue.find({ type: 'report' });
     expect(queued).toHaveLength(1);
     expect(String(queued[0].query_id)).toBe(query.id);
-  });
-
-  test('leaderboard ranks users by points', async () => {
-    const asker = await makeUser();
-    const answerer = await makeUser({ name: 'Top Helper' });
-    const query = await createQuery(asker.token);
-    const posted = await authed(
-      request(app).post(`/api/queries/${query.id}/answers`),
-      answerer.token,
-    ).send({ body: 'A genuinely helpful and well-explained answer here.' });
-    await authed(request(app).post(`/api/answers/${posted.body.answer.id}/like`), asker.token).send();
-
-    const res = await request(app).get('/api/users/leaderboard');
-    expect(res.status).toBe(200);
-    expect(res.body.users[0].name).toBe('Top Helper');
-    expect(res.body.users[0].points).toBe(POINTS.ANSWER_LIKED);
-    expect(res.body.users[0].rank).toBe(1);
   });
 });

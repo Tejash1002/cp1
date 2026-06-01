@@ -1,6 +1,5 @@
 import { Answer } from '../models/Answer.js';
 import { Query } from '../models/Query.js';
-import { User } from '../models/User.js';
 import { ApiError } from '../utils/ApiError.js';
 import { notify } from './notificationService.js';
 import {
@@ -54,20 +53,4 @@ export async function markSolution(user, queryId, answerId) {
     accepted_answer_id: answer._id,
     grace_period_deadline: query.grace_period_deadline,
   };
-}
-
-/** Top users by reputation points (admins are excluded from the ranking). */
-export async function getLeaderboard(limit = 20) {
-  const users = await User.find({ is_deleted: false, role: { $ne: ROLES.ADMIN } })
-    .sort({ points: -1, createdAt: 1 })
-    .limit(Math.min(Number(limit) || 20, 50))
-    .select('name points badges')
-    .lean();
-  return users.map((u, i) => ({
-    rank: i + 1,
-    id: u._id,
-    name: u.name,
-    points: u.points,
-    badges: u.badges ?? [],
-  }));
 }

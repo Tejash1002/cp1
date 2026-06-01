@@ -16,7 +16,6 @@ export default function Sidebar({ onNavigate }) {
     { to: '/faq', icon: 'help_center', label: 'FAQ' },
     { to: '/ask', icon: 'edit_square', label: 'Ask a Query' },
     { to: '/queries', icon: 'forum', label: 'Forum' },
-    { to: '/leaderboard', icon: 'leaderboard', label: 'Leaderboard' },
     { to: user ? `/users/${user.id}` : '/login', icon: 'person', label: 'Profile' },
   ];
   if (isAdmin) items.push({ to: '/admin', icon: 'shield', label: 'Admin' });
