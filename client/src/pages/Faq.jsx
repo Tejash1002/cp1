@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { listFaqs, searchFaqs } from '../api/faq.js';
+import { searchQueries } from '../api/queries.js';
 
 const PREVIEW_COUNT = 5; // items shown before "View all" expands a category
 
@@ -9,6 +10,7 @@ export default function Faq() {
   const [loading, setLoading] = useState(true);
   const [term, setTerm] = useState('');
   const [results, setResults] = useState(null);
+  const [forumResults, setForumResults] = useState([]);
   const [openItems, setOpenItems] = useState({});
   const [openCats, setOpenCats] = useState({});
   const [showAll, setShowAll] = useState({});
@@ -37,13 +39,22 @@ export default function Faq() {
   useEffect(() => {
     if (!term.trim()) {
       setResults(null);
+      setForumResults([]);
       return undefined;
     }
     let active = true;
     const t = setTimeout(async () => {
       try {
-        const r = await searchFaqs(term);
-        if (active) setResults(r);
+        // Search both the FAQ and the community forum so questions asked in the
+        // forum surface here too.
+        const [faq, forum] = await Promise.all([
+          searchFaqs(term),
+          searchQueries(term).catch(() => []),
+        ]);
+        if (active) {
+          setResults(faq);
+          setForumResults(forum);
+        }
       } catch {
         /* ignore transient search errors */
       }
@@ -81,6 +92,7 @@ export default function Faq() {
             onClick={() => {
               setTerm('');
               setResults(null);
+              setForumResults([]);
             }}
           >
             Clear
@@ -93,18 +105,33 @@ export default function Faq() {
       </p>
 
       {results !== null ? (
-        <section>
-          <h2>Search results</h2>
-          {results.length === 0 ? (
-            <p className="muted">No matching FAQ entries. Try the chatbot or ask the community.</p>
-          ) : (
-            <div className="faq-accordion">
-              {results.map((r) => (
-                <FaqItem key={r.id} entry={r} open={openItems[r.id]} onToggle={() => toggleItem(r.id)} />
-              ))}
-            </div>
+        <>
+          <section>
+            <h2>FAQ results</h2>
+            {results.length === 0 ? (
+              <p className="muted">No matching FAQ entries. Try the chatbot or ask the community.</p>
+            ) : (
+              <div className="faq-accordion">
+                {results.map((r) => (
+                  <FaqItem key={r.id} entry={r} open={openItems[r.id]} onToggle={() => toggleItem(r.id)} />
+                ))}
+              </div>
+            )}
+          </section>
+          {forumResults.length > 0 && (
+            <section>
+              <h2>Community questions</h2>
+              <ul className="forum-results">
+                {forumResults.map((r) => (
+                  <li key={r.id}>
+                    <Link to={`/queries/${r.id}`}>{r.title}</Link>
+                    <span className={`badge status-${r.status}`}>{r.status}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
-        </section>
+        </>
       ) : loading ? (
         <p>Loading…</p>
       ) : groups.length === 0 ? (

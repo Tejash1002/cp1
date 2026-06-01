@@ -1057,6 +1057,21 @@ textarea {
   white-space: nowrap;
 }
 
+/* Forum questions surfaced in the FAQ search. */
+.forum-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.forum-results li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
 /* Author identity: name on one line, held badge underneath. */
 .author-id {
   display: inline-flex;

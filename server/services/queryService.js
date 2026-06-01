@@ -8,7 +8,7 @@ import { ai } from '../config/ai.js';
 import { ApiError } from '../utils/ApiError.js';
 import { detectGibberish } from './gibberishService.js';
 import { recordSpamStrike } from './spamService.js';
-import { findSimilarQueries } from './vectorService.js';
+import { findSimilarQueries, cosineSimilarity } from './vectorService.js';
 import * as taxonomyService from './taxonomyService.js';
 import { topBadge } from './badgeService.js';
 import {
@@ -209,15 +209,21 @@ export async function listQueries(opts = {}, viewerId) {
   const limit = Math.min(Number(opts.limit) || 20, 50);
   const page = Math.max(Number(opts.page) || 1, 1);
 
-  const [items, total] = await Promise.all([
-    Query.find(filter)
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .populate('author_id', 'name points badges')
-      .lean(),
+  // Forum ordering: resolved questions sink to the bottom (they no longer need
+  // help), open/answered ones float up; within each band, newest first.
+  const pipeline = [
+    { $match: filter },
+    { $addFields: { _resolved_rank: { $cond: [{ $eq: ['$status', QUERY_STATUS.RESOLVED] }, 1, 0] } } },
+    { $sort: { _resolved_rank: 1, createdAt: -1 } },
+    { $skip: (page - 1) * limit },
+    { $limit: limit },
+  ];
+
+  const [rawItems, total] = await Promise.all([
+    Query.aggregate(pipeline),
     Query.countDocuments(filter),
   ]);
+  const items = await Query.populate(rawItems, { path: 'author_id', select: 'name points badges' });
 
   const enriched = await withEngagement(items, viewerId);
   return { items: enriched, total, page, limit };
@@ -252,6 +258,33 @@ async function withEngagement(items, viewerId) {
     my_vote: voteMap.get(String(it._id)) ?? 0,
     is_saved: savedSet.has(String(it._id)),
   }));
+}
+
+/**
+ * Search forum questions (hybrid semantic + keyword), so community questions
+ * surface in the knowledge-base search alongside FAQ entries.
+ */
+export async function searchQueries(qText, viewerId) {
+  const q = String(qText ?? '').trim();
+  if (!q) return [];
+
+  const qEmbed = await ai.embed(q);
+  const lc = q.toLowerCase();
+  const docs = await Query.find({ is_deleted: false, is_archived: false })
+    .populate('author_id', 'name points badges')
+    .lean();
+
+  return docs
+    .map((d) => {
+      const semantic = d.embedding ? cosineSimilarity(qEmbed, d.embedding) : 0;
+      const keyword =
+        d.title?.toLowerCase().includes(lc) || d.body?.toLowerCase().includes(lc) ? 0.3 : 0;
+      return { d, score: semantic + keyword };
+    })
+    .filter((s) => s.score > 0.05)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 8)
+    .map((s) => ({ ...serialize(s.d, viewerId), score: round(s.score) }));
 }
 
 /** Distinct categories in use across active queries (for filter dropdowns). */

@@ -17,6 +17,12 @@ export async function listCategories() {
   return data.categories;
 }
 
+// Hybrid search over forum questions (semantic + keyword).
+export async function searchQueries(q) {
+  const { data } = await api.get('/queries/search', { params: { q } });
+  return data.results;
+}
+
 /**
  * Create a query. Sends multipart/form-data so screenshots can ride along.
  * `fields` may include title, body, category, tags, is_anonymous, contact_email,

@@ -16,6 +16,11 @@ export const categories = asyncHandler(async (_req, res) => {
   res.json({ categories: await queryService.listCategories() });
 });
 
+export const search = asyncHandler(async (req, res) => {
+  const results = await queryService.searchQueries(req.query?.q, req.userId);
+  res.json({ results });
+});
+
 export const detail = asyncHandler(async (req, res) => {
   const query = await queryService.getQuery(req.params.id, req.userId);
   res.json({ query });

@@ -20,6 +20,9 @@ router.get('/bookmarks', auth, ctrl.bookmarks);
 // Distinct categories for filter dropdowns (must precede /:id).
 router.get('/categories', ctrl.categories);
 
+// Hybrid search over forum questions (must precede /:id).
+router.get('/search', optionalAuth, ctrl.search);
+
 router.get('/:id', optionalAuth, ctrl.detail);
 
 // Writes require a logged-in, non-banned user.
