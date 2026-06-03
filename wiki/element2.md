@@ -1,4 +1,4 @@
- # Ask a Query & Forum
+# Ask a Query & Forum
 
 ## Overview
 
@@ -17,7 +17,6 @@ Key capabilities include:
 - Voting and bookmarking
 - Accepted answer workflows
 - Automated solution finalization
-
 
 ---
 
@@ -119,7 +118,6 @@ Invalid values immediately generate validation failures.
 Only administrator-approved taxonomy values may be used.
 
 ---
-
 
 # Noise Detection
 
