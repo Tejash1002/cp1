@@ -24,7 +24,6 @@ Key capabilities include:
 
 ## Query Submission Interface
 
-
 Users are required to provide:
 
 | Field         | Required |
@@ -241,6 +240,9 @@ A query is eligible when its status is Answered and it is more than 48 hours old
 
 ## Resolution
 
+Duplicate queries are detected using semantic similarity.
+
+This reduces repeated discussions and improves knowledge reuse.
 * If a manually accepted answer exists, it is retained and the query is marked Resolved with reputation awarded.
 * If no accepted answer exists, the highest-voted answer is automatically selected as the solution. No reputation is awarded in this case.
 
@@ -257,8 +259,6 @@ To keep resolved threads concise, a maximum of three answers are preserved; lowe
 | QueryDetail.jsx | Full thread view, voting, bookmarking, answers, comments, resolution workflows |
 
 ---
-
-# Service Layer Responsibilities
 
 | Service          | Responsibility                                                        |
 | ---------------- | --------------------------------------------------------------------- |
